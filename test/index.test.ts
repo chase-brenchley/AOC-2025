@@ -10,7 +10,7 @@ describe('Utilities', () => {
         const test = () => {
             readInput('path/does/not/exist')
         }
-        
+
         expect(test).toThrow()
     })
 })
