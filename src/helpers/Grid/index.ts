@@ -25,8 +25,8 @@ export class Grid {
     return this.cells.get(point.toString());
   }
 
-  set(point: Point, value: Cell) {
-    this.cells.set(point.toString(), value);
+  set(point: Point, value: Cell, grid: Map<string, Cell> = this.cells) {
+    grid.set(point.toString(), value);
   }
 
   getNeighbors(point: Point): Point[] {
@@ -74,12 +74,12 @@ export class Grid {
     return this.getAdjacent(point).map(neighbor => this.get(neighbor))
   }
 
-  toString(): string {
+  toString(grid: Map<string, Cell> = this.cells): string {
     let result = ''
     let lastX = 0
     let lastY = 0
 
-    for (let [point, cell] of this.cells.entries()) {
+    for (let [point, cell] of grid.entries()) {
       const [x, y] = point.split(',').map(coord => parseInt(coord))
 
       if (x !== lastX) {
@@ -91,6 +91,12 @@ export class Grid {
     }
 
     return result
+  }
+
+  setSouthNeighbor(point: Point, value: Cell) {
+    const [ , ,southNeighbor, ] = this.getNeighbors(point)
+
+    this.set(southNeighbor, value)
   }
 }
 
